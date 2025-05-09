@@ -1,11 +1,23 @@
-fastapi
-uvicorn
-sqlalchemy
-psycopg2
-pydantic
-python-dotenv
-loguru
-alembic
-bcrypt
-passlib
-pyjwt
+# Core
+fastapi==0.109.0
+uvicorn==0.27.0
+
+# Database
+sqlalchemy==2.0.25
+psycopg2-binary==2.9.9  # More reliable than psycopg2 for deployments
+
+# Security
+bcrypt==4.1.2
+passlib==1.7.4
+pyjwt==2.8.0
+
+# Utilities
+python-dotenv==1.0.0
+loguru==0.7.2
+
+# Migrations
+alembic==1.13.1
+
+# Optional (uncomment if needed)
+# pydantic==2.5.3
+# pydantic-settings==2.2.1
