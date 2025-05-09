@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "scripts": {
     "start": "sh start.sh",
-    "build": "cd frontend && npm install && npm run build",
-    "install-deps": "pip install -r Backend/requirements.txt && cd frontend && npm install"
+    "build": "cd frontend && npm install --omit=dev && npm run build",
+    "install-deps": "pip install -r Backend/requirements.txt && cd frontend && npm install --omit=dev"
   },
   "engines": {
-    "node": "18.x",
-    "npm": "9.x"
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0"
   }
 }
