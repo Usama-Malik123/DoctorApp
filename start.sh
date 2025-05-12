@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Install backend deps using exact Python path
-/opt/python/bin/python -m pip install --no-cache-dir -r requirements.txt
+python3 -m pip install --no-cache-dir -r requirements.txt
 
 # Build frontend
 cd frontend
