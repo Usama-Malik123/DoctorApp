@@ -15,7 +15,7 @@ app.include_router(doctor_controller.router)
 
 # Serve frontend in production
 if os.getenv("RAILWAY_ENVIRONMENT"):
-    app.mount("/", StaticFiles(directory="static", html=True), name="static")
+    app.mount("/", StaticFiles(directory="Backend/static", html=True), name="static")
 
 @app.get("/api/health")
 def health_check():
