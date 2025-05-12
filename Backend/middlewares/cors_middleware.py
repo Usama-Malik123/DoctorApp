@@ -5,7 +5,7 @@ def setup_cors(app):
         CORSMiddleware,
         allow_origins=[
             "http://localhost:5173",
-            "https://doctorapp-production-c2f6.up.railway.app",
+            "https://doctorapp-production-c2f6.up.railway.app/",
         ],
         allow_credentials=True,
         allow_methods=["*"],
