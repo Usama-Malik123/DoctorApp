@@ -1,6 +1,8 @@
-from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from starlette.requests import Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi import FastAPI
 from Backend.controllers import doctor_controller
 from middlewares.cors_middleware import setup_cors
 from logger_config.logger_config import logger
@@ -8,25 +10,25 @@ import os
 
 app = FastAPI(title="Doctor API")
 
-# Middleware setup
+# CORS
 setup_cors(app)
 
-# Include routers
+# API Routers
 app.include_router(doctor_controller.router)
 
-# Serve frontend in production (Railway)
+# Serve frontend in production
 if os.getenv("RAILWAY_ENVIRONMENT"):
-    app.mount("/assets", StaticFiles(directory="frontend/dist/assets"), name="assets")
+    app.mount("/", StaticFiles(directory="Backend/static", html=True), name="static")
 
-    @app.get("/{full_path:path}")
-    async def serve_react_app():
-        return FileResponse("frontend/dist/index.html")
+    # Catch-all fallback for React routes
+    @app.exception_handler(404)
+    async def custom_404_handler(request: Request, exc):
+        file_path = os.path.join("Backend", "static", "index.html")
+        if os.path.exists(file_path):
+            return FileResponse(file_path)
+        return {"detail": "Not Found"}
 
 # Health check
 @app.get("/api/health")
 def health_check():
     return {"status": "API is running"}
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000)
