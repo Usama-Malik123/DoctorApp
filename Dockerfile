@@ -34,6 +34,5 @@ WORKDIR /app
 # Expose backend port
 EXPOSE 8000
 
-ENV PYTHONPATH="${PYTHONPATH}:/app/b=Backend"
 # Start backend (FastAPI)
 CMD ["uvicorn", "Backend.main:app", "--host", "0.0.0.0", "--port", "8000"]

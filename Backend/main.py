@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from controllers import doctor_controller
+from Backend.controllers import doctor_controller
 from middlewares.cors_middleware import setup_cors
 from logger_config.logger_config import logger
 import os
