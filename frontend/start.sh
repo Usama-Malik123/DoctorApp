@@ -1,11 +1,13 @@
 #!/bin/bash
 
-# Debugging: Print current directory and files
-echo "Current directory: $(pwd)"
-ls -la
+# Install backend deps using exact Python path
+/opt/python/bin/python -m pip install --no-cache-dir -r requirements.txt
 
-# Install backend deps
-cd Backend && pip install -r requirements.txt && cd ..
+# Build frontend
+cd frontend
+npm install --omit=dev
+npm run build
+cd ..
 
-# Start server (absolute Python path)
-exec /opt/python/bin/python -m Backend.main
+# Start server using absolute Python path
+/opt/python/bin/python -m uvicorn Backend.main:app --host 0.0.0.0 --port $PORT
