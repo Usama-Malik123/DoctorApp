@@ -1,0 +1,16 @@
+{
+  "build": {
+    "base": "mixed",
+    "python": {
+      "install": "pip install -r Backend/requirements.txt"
+    },
+    "node": {
+      "install": "cd frontend && npm install --omit=dev",
+      "build": "cd frontend && npm run build"
+    }
+  },
+  "deploy": {
+    "startCommand": "./start.sh",
+    "public": true
+  }
+}
