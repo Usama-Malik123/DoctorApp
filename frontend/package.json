@@ -8,6 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
+    "start": "vite preview --port $PORT",
+    "prod-build": "npm install --omit=dev && vite build --mode production"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.13",
