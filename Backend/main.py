@@ -13,10 +13,28 @@ setup_cors(app)
 # Include routers
 app.include_router(doctor_controller.router)
 
-# Serve frontend in production
-if os.getenv("RAILWAY_ENVIRONMENT"):
-    app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="static")
+# Serve frontend - Modified for Railway
+frontend_dir = os.path.join(os.path.dirname(__file__), "../frontend/dist")
+if os.path.exists(frontend_dir):
+    app.mount("/", StaticFiles(directory=frontend_dir, html=True), name="static")
 
+# Explicit health check endpoint
 @app.get("/api/health")
 def health_check():
-    return {"status": "API is running"}
+    return {
+        "status": "API is running",
+        "environment": os.getenv("RAILWAY_ENVIRONMENT", "development")
+    }
+
+# Railway-specific startup (critical for port binding)
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.getenv("PORT", 8000))
+    logger.info(f"Starting server on port {port}")
+    uvicorn.run(
+        app,
+        host="0.0.0.0",
+        port=port,
+        workers=1,
+        log_config=None  # Uses your existing logger
+    )
