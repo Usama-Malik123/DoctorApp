@@ -1,8 +1,8 @@
 # Use official Python image with Node installed
 FROM python:3.10-slim
 
-# Install Node.js manually
-RUN apt-get update && apt-get install -y curl && \
+# Install Node.js and build tools
+RUN apt-get update && apt-get install -y curl build-essential && \
     curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y nodejs
 
@@ -15,9 +15,12 @@ COPY . .
 # Install backend dependencies
 RUN pip install --no-cache-dir -r Backend/requirements.txt
 
-# Install frontend dependencies & build
+# Install frontend dependencies (including dev dependencies)
 WORKDIR /app/frontend
-RUN npm install --omit=dev --verbose && npm run build
+RUN npm install --verbose
+
+# Build frontend using the prod-build script
+RUN npm run prod-build
 
 # Back to app root
 WORKDIR /app
