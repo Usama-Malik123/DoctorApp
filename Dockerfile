@@ -17,7 +17,7 @@ RUN pip install --no-cache-dir -r Backend/requirements.txt
 
 # Install frontend dependencies & build
 WORKDIR /app/frontend
-RUN npm install --omit=dev && npm run build
+RUN npm install --omit=dev --verbose && npm run build
 
 # Back to app root
 WORKDIR /app
